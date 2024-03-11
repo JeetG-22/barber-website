@@ -4,6 +4,10 @@ import "./SearchBar.css"
 
 export const SearchBar = () => {
     const [input, setInput] = useState("");
+    const [client, clientList] = useState([]);
+    const queryDB = () => {
+        alert(input);
+    }
 
     return (
         <div className='input-container'>
@@ -12,9 +16,9 @@ export const SearchBar = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
             />
-            <button>Search</button>
-            <br/>
-            <div>{input}</div>
+            <button onClick={queryDB}>
+                Search
+            </button>
             
         </div>
 
