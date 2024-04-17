@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
 
 app.get("/client-search", (req, res) => {
     const client = req.query.clientSearch;
-    const q = "SELECT * FROM ClientInfo WHERE firstName = ?";
-    db.query(q, [client], (err, data) => {
-        if(err) return res.send(err);
+    const q = "SELECT * FROM Customer WHERE first_name = ? OR last_name = ? OR phone_num = ? OR email_addr = ?";
+    db.query(q, [client, client, client, client], (err, data) => {
+        if(err) return res.send("" + err);
         return res.send(data);
     })
 })

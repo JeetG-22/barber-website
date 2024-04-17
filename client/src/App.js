@@ -1,17 +1,19 @@
 import React from 'react';
 import "./App.css"
-import { SearchBar } from './components/SearchBar';
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { Home } from'./pages/Home';
+import { AddClient } from './pages/AddClient';
+import { ClientProfile } from './pages/ClientProfile';
+import {Routes, Route} from "react-router-dom"
 
 const App = () => {
     return (
         <div className="App">
-            <h1>Client Database</h1>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<div className="search-bar-container"><SearchBar/></div>}/>
-                </Routes>
-            </BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/add-client" element={<AddClient/>}/>
+                <Route path="/client-profile" element={<ClientProfile/>}/>
+            </Routes>
+
 
         </div>
     )

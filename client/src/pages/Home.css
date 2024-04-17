@@ -1,0 +1,7 @@
+.search-bar-container {
+    display:flex;
+    flex-direction: column;
+    margin:auto;
+    align-items: center;
+    min-width: 200px;
+}

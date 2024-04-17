@@ -10,12 +10,12 @@ export const SearchBar = () => {
     const [clientList, setClientList] = useState([]);
 
 
-    const submitHandler = e => {
+    const submitHandler = async e => {
         //Prevents refreshing each time button is clicked
         e.preventDefault(); 
         try{
-            axios.get("http://localhost:8800/client-search", {params: {clientSearch:clientInput}}).then((response) => {
-                console.log(response.data);
+            await axios.get("/client-search", {params: {clientSearch:clientInput}}).then((response) => {
+                if(typeof response.data === "string") throw new Error(response.data);
                 setClientList(response.data);
             });
 
@@ -36,10 +36,11 @@ export const SearchBar = () => {
                 <button onClick={submitHandler}> Search </button>
             </div>
             <div className="search-results">
+                <p>Rows Returned: {clientList.length}</p>
                 <CreateUserCard/>
                 {clientList.map((clientInfo, key) => {
-                    return <ClientCard firstName={clientInfo.firstName} lastName={clientInfo.lastName}
-                            phoneNumber={clientInfo.phoneNumber} email={clientInfo.email}/>;
+                    return <ClientCard firstName={clientInfo.first_name} lastName={clientInfo.last_name}
+                            phoneNumber={clientInfo.phone_num} email={clientInfo.email_addr}/>;
                 })}
             </div>
         </div>

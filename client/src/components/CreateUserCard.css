@@ -25,3 +25,11 @@ button:hover {
     background-color: white;
     margin-left: 20px;
 }
+
+.link-button {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer */
+  }
