@@ -13,16 +13,15 @@ export const SearchBar = () => {
     const submitHandler = async e => {
         //Prevents refreshing each time button is clicked
         e.preventDefault(); 
-        try{
-            await axios.get("/client-search", {params: {clientSearch:clientInput}}).then((response) => {
-                if(typeof response.data === "string") throw new Error(response.data);
-                setClientList(response.data);
+        await axios.get("/client-search", {params: {clientSearch:clientInput}}).then((res) => {
+            if(res.status === 500) {
+                console.log(res.data);                   
+                return;
+            };
+            setClientList(res.data);
+        }).catch((err) => {
+                console.log(err);
             });
-
-        } catch(err){
-            console.log(err);
-        }
-        
     }
 
     return (
