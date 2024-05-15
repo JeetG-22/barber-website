@@ -71,13 +71,15 @@ app.post("/csv-upload", async (req, res) => {
     const insertQuery =
       "INSERT INTO Customer (first_name, last_name, phone_num, email_addr) VALUES (?,?,?,?)";
 
+
     const queryPromises = [];
     for (const row of csvData) {
-      const fName = row["Customer Name"].split(" ")[0];
-      const lName = row["Customer Name"].split(" ")[1] || ""; //should get the last element (change)
+        const fullName = row["Customer Name"] || "";
+      const fName = fullName.split(" ")[0] || "";
+      const lName = fullName.split(" ")[1] || ""; //should get the last element (change)
       const number = row["Phone"];
       const email = row["Email"];
-      //   console.log(fName + " || " + lName + " || " + number + " || " + email);
+        console.log(fName + " || " + lName + " || " + number + " || " + email);
 
       const promise = new Promise((resolve, reject) => {
         db.query(searchQuery, [fName, lName, number, email], (err, results) => {
@@ -90,7 +92,6 @@ app.post("/csv-upload", async (req, res) => {
             });
             reject(err);
           }
-          //   console.log(results);
           else if (results.length === 0) {
             //checks to see if there is already an existing record
             db.query(insertQuery, [fName, lName, number, email], (err) => {
@@ -133,10 +134,6 @@ app.post("/csv-upload", async (req, res) => {
     res.status(200).send(responseData);
   } catch (err) {
     console.error(err);
-    responseData.push({
-      error: false,
-      message: "Error Processing File",
-    });
     res.status(500).send(responseData);
   }
 });

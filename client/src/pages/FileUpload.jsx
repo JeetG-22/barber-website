@@ -27,8 +27,18 @@ export const FileUpload = () => {
       })
       .catch((err) => {
         console.log("Error Uploading File: ", err);
+        alert("Error Processing File");
       });
   };
+
+  let successCount = 0, dupCount = 0, errorCount = 0;
+  results.forEach((data) => {
+    if(data.error) errorCount++;
+    else {
+      if(data.success) successCount++;
+      else dupCount++;
+    }
+  })
 
   return (
     <div>
@@ -39,20 +49,15 @@ export const FileUpload = () => {
       <br />
       <br />
       <div>
-        {results.map((data, index) => (
-          <div key={index}>
-            {data.success !== undefined ? (
-              <p style={{ color: data.success ? "green" : "red" }}>
-                {data.firstName} {data.lastName}, Phone: {data.phone}, Email:{" "}
-                {data.email}, {data.message}
-              </p>
-            ) : data.error ? (
-              <p style={{ color: "red" }}>{data.message}</p>
-            ) : (
-              <p>{data.message}</p>
-            )}
+        {
+          results.length !== 0 && (
+          <div> 
+            <p style={{color: 'green'}}>Successful Entries: {successCount}</p>
+            <p style={{color: 'orange'}}>Duplicate Entries: {dupCount}</p>
+            <p style={{color: 'red'}}>Errors: {errorCount}</p>
           </div>
-        ))}
+          )
+        }
       </div>
     </div>
   );
